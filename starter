@@ -1,0 +1,15 @@
+#! /usr/bin/racket
+ #lang racket
+(require "main.rkt"
+    db/base
+         racket/date
+         web-server/servlet
+         web-server/servlet-env
+         file/sha1
+         xml)
+
+(serve/servlet start
+               #:port 80
+               #:servlet-path "/weixin"
+               #:listen-ip "www.ipstr.xyz"
+               #:command-line? #t)

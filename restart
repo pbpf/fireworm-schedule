@@ -1,0 +1,4 @@
+
+#! /usr/bin/sh
+
+/root/schedule/stop & /root/schedule/start

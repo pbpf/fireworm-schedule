@@ -1,0 +1,14 @@
+[Unit]
+Description=fireworm
+After=network.target
+
+[Service]
+Type=forking
+PIDFile=/run/fireworm.pid
+ExecStart=/root/schedule/start
+ExecReload=/root/schedule/restart
+ExecStop=/root/schedule/stop
+#PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
