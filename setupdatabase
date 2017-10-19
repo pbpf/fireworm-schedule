@@ -1,6 +1,10 @@
 #! /usr/bin/racket
 #lang racket
 (require "schedule.rkt"
+          db/sqlite3
          )
-
+(define(init-data-file! fi)
+ (define cnn (sqlite3-connect #:database fi))
+ (init-cnn! cnn))
+ 
 (init-data-file! data-path)
