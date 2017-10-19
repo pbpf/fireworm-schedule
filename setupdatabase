@@ -5,6 +5,6 @@
          )
 (define(init-data-file! fi)
  (define cnn (sqlite3-connect #:database fi))
- (init-cnn! cnn))
+ (init-sql! cnn))
  
 (init-data-file! data-path)
