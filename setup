@@ -4,7 +4,6 @@ mv fireworm.service /usr/lib/systemd/system/
 systemctl enable fireworm.service
 echo -n "configuring database..."
 rm -f data.db
-touch data.db
 ./setupdatabase
 echo "done"
 systemctl start fireworm
