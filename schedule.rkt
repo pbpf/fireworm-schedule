@@ -14,7 +14,7 @@
 (define(init-sql! cnn)
   (query-exec cnn "CREATE TABLE classsd (week INT NOT NULL, weekday INT NOT NULL, rank INT NOT NULL, user, room CHAR, name CHAR, lastremind INT, PRIMARY KEY (week, weekday, rank, user))")
   (query-exec cnn "CREATE TABLE users (name CHAR NOT NULL PRIMARY KEY, enable INT)")
-  (query-exec cnn "CREATE TABLE timerange (rank INT PRIMARY KEY, start INT, "end" INT)")
+  (query-exec cnn "CREATE TABLE timerange (rank INT PRIMARY KEY, start INT, end INT)")
   )
 
 (define(range* a b)
