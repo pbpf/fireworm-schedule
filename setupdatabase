@@ -1,0 +1,6 @@
+#! /usr/bin/racket
+#lang racket
+(require "schedule.rkt"
+         )
+
+(init-data-file! data-path)
