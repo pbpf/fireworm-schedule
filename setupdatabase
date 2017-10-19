@@ -1,6 +1,7 @@
 #! /usr/bin/racket
 #lang racket
 (require "schedule.rkt"
+          "configure.rkt"
           db/sqlite3
          )
 (define(init-data-file! fi)
