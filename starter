@@ -11,5 +11,5 @@
 (serve/servlet start
                #:port 80
                #:servlet-path "/weixin"
-               #:listen-ip "www.ipstr.xyz"
+               #:listen-ip "0.0.0"
                #:command-line? #t)
