@@ -1,4 +1,5 @@
 
 #! /usr/bin/sh
 
-/root/fireworm-schedule/stop & /root/schedule/start
+/root/fireworm-schedule/stop 
+/root/fireworm-schedule/start
