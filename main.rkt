@@ -1,5 +1,6 @@
 #lang racket
 (require "schedule.rkt"
+         "configure.rkt"
          db/base
          db/sqlite3
          racket/date
@@ -9,13 +10,11 @@
          xml
          "./library/msg/main.rkt"
          "./library/access/signature.rkt"
-         "./render.rkt"
-         racket/runtime-path)
+         "./render.rkt")
 (provide start)
 
-(define-runtime-path data "./data.db")
-(define cnn ;(sqlite3-connect #:database data))
-  (virtual-connection (connection-pool (lambda () (sqlite3-connect #:database data)))))
+(define cnn ;(sqlite3-connect #:database data-path))
+  (virtual-connection (connection-pool (lambda () (sqlite3-connect #:database data-path)))))
 #|
 (define (create-schedule time cmd)
   #f)
