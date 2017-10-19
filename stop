@@ -1,4 +1,5 @@
 #! /usr/bin/sh
-echo "fireworm stopping ..."
-kill $(cat /run/fireworm.pid) & rm -f /run/fireworm.pid
+echo -n "fireworm stopping ..."
+kill $(cat /run/fireworm.pid) 
+rm -f /run/fireworm.pid
 echo "done!"
