@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+mv fireworm.service /usr/lib/systemd/system/
+systemctl enable fireworm.service
+systemctl start fireworm
