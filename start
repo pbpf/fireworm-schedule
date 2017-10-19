@@ -1,2 +1,5 @@
 #! /usr/bin/sh
+echo "fireworm starting ..."
 /root/fireworm-schedule/starter >/dev/null 2>&1 & echo $! > /run/fireworm.pid
+echo "done"
+
