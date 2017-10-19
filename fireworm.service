@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=forking
 PIDFile=/run/fireworm.pid
-ExecStart=/root/schedule/start
-ExecReload=/root/schedule/restart
-ExecStop=/root/schedule/stop
+ExecStart=/root/fireworm-schedule/start
+ExecReload=/root/fireworm-schedule/restart
+ExecStop=/root/fireworm-schedule/stop
 #PrivateTmp=true
 
 [Install]
