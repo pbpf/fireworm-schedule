@@ -1,12 +1,8 @@
 #! /usr/bin/racket
- #lang racket
-(require "main.rkt"
-    db/base
-         racket/date
-         web-server/servlet
-         web-server/servlet-env
-         file/sha1
-         xml)
+ #lang racket/base
+(require web-server/servlet-env
+         "main.rkt"
+         )
 
 (serve/servlet start
                #:port 80
