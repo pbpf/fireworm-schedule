@@ -1,8 +1,7 @@
-#lang racket
+#lang racket/base
 (require "parameters.rkt"
          "reply.rkt"
-         web-server/servlet
-         web-server/servlet-env)
+         web-server/servlet)
 
 (provide response/msg response/empty)
 
