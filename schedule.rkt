@@ -1,11 +1,8 @@
-#lang racket
-(require db
-         racket/date
-         pict
-          web-server/servlet
-         web-server/servlet-env
-         file/sha1
-         xml)
+#lang racket/base
+(require db/base
+         racket/string
+         racket/list
+         racket/date)
 
 (provide (all-defined-out))
 ;class-schedule
@@ -16,11 +13,6 @@
   (query-exec cnn "CREATE TABLE users (name CHAR NOT NULL PRIMARY KEY, enable INT)")
   (query-exec cnn "CREATE TABLE timerange (rank INT PRIMARY KEY, start INT, end INT)")
   )
-
-(define(range* a b)
-  (range a (add1 b)))
-
-
 (define(insert-sd cnn tlst user)
   (for ([i (in-list tlst)])
     (insert-sd-weeks  cnn i user)))
@@ -140,7 +132,7 @@
     `( ,(index->weekday i),@(for/list
             ([j (in-range 1 5)])
     (weekclass->str cnn i j  week user)))))))
-;api
+#|
 (define(user-schedule-pict cnn user)
   (table 5
          (map (λ (x) (text x))
@@ -158,6 +150,7 @@
          cc-superimpose
          20
          10))
+|#
 (define(weekclass->str cnn week-day rank week user)
   (string-join 
   (map (lambda(x)(format "~a ~a" (vector-ref x 0) (vector-ref x 1)))
@@ -250,14 +243,17 @@
            #f
         (class-render c (vector-ref (car class) 0) (vector-ref (car class) 1) (list->vector time-range))))
       #F))
-
+#|
 (define(schedule cnn user)
   (user-schedule-pict cnn user))
+|#
 (define(which-week-is-today cnn user)
   (define-values(a b)(which-week-is cnn (today-ymd) user))
   a)
+#|
 (define(this-week-schedule cnn user)
   (user-schedule-week-pict cnn user (which-week-is-today cnn user)))
 (define(next-week-schedule cnn user)
   (user-schedule-week-pict cnn user (+ 1(which-week-is-today cnn user))))
+|#
                 
