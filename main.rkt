@@ -1,13 +1,13 @@
-#lang racket
-(require "schedule.rkt"
-         "configure.rkt"
-         db/base
+#lang racket/base
+(require db/base
          db/sqlite3
          racket/date
+         racket/string
          web-server/servlet
-         ;web-server/servlet-env
-        ; file/sha1
+         racket/match
          xml
+         "schedule.rkt"
+         "configure.rkt"
          "./library/msg/main.rkt"
          "./library/access/signature.rkt"
          "./render.rkt")
