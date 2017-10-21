@@ -1,5 +1,5 @@
 #! /usr/bin/racket
-#lang racket
+#lang racket/base
 (require "schedule.rkt"
           "configure.rkt"
           db/sqlite3
