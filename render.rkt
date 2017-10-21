@@ -1,4 +1,7 @@
-#lang racket
+#lang racket/base
+(require racket/list
+         racket/match
+         racket/string)
 (provide string->table
          good-tablestr?)
 (define(string->table str)
