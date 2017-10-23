@@ -151,10 +151,10 @@
                                                                         (query-exec cnn "insert or replace into users(name,enable) values($1,$2)" (current-to-user) 1)))
                                                 (return (response/msg (msg:text "课表已上传/更新" )))))]
                                               [else (response/msg (msg:text "课表格式有误!" ))])]
-         [(regexp date-expr (list _ _ _ _ _ a b)) (define dt (list(current-year) (string->number a)(string->number b)))
+         [(pregexp date-expr) (define dt `(,(current-year),@(map string->number (string-split txt "-"))))
                                                   (handle-dt dt)
                                                   ]
-         [(regexp date-expr-long (list _ _ _ _ _ _ _ a b c)) (define dt (list (string->number a)(string->number b) (string->number c)))(handle-dt dt)]
+         [(pregexp date-expr-long) (define dt (map string->number (string-split txt "-")))(handle-dt dt)]
          [else
                 (rp-cmd (match-cmd  txt)) ])]
       [("voice");(displayln (removejh(receivemsg:voice:get-Recognition xp)))(flush-output)
