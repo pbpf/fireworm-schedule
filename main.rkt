@@ -13,6 +13,10 @@
          "./render.rkt")
 (provide start)
 
+(define date-expr #px"^(0?[13578]|1[02])-(0?[1-9]|[12][0-9]|3[01])|(0?[469]|11)-(0?[1-9]|[12][0-9]|30)|(0?2)-(0?[1-9]|[1][0-9]|2[0-9])$")
+(define date-expr-long #px"^([0-9]{4})-(0?[13578]|1[02])-(0?[1-9]|[12][0-9]|3[01])|([0-9]{4})-(0?[469]|11)-(0?[1-9]|[12][0-9]|30)|([0-9]{4})-(0?2)-(0?[1-9]|[1][0-9]|2[0-9])$")
+
+
 (define cnn ;(sqlite3-connect #:database data-path))
   (virtual-connection (connection-pool (lambda () (sqlite3-connect #:database data-path)))))
 #|
@@ -48,6 +52,8 @@
   (define x(regexp-match  #rx"^(.*?)(。|[.]).*" str))
   (if x (cadr x)
       str))
+
+
 
 (define(match-cmd text)
   (case text
@@ -101,7 +107,24 @@
            [(jtdk)(response/msg (msg:text (restr*(today-schedule cnn user))))]
            [(mtdk)(response/msg (msg:text (restr*(nextday-schedule cnn user))))]
            [else (response/msg (msg:text "功能实现中..."))]))))
-           
+
+(define(date-exists? lst)
+  (match-define (list a b c) lst)
+  (not (and(not (rich-year? a))
+       (= b 2)
+       (= c 29))
+       ))
+(define(rich-year? y)
+  (if (remainder y 100)
+      (remainder y 400)
+       (remainder y 4)))
+(define(handle-dt dt #:user [user (current-to-user)])
+  (if (date-exists? dt)
+      (response/msg (msg:text (restr*(ymd-schedule cnn dt user))))
+      (response/msg (msg:text "不存在的日期"))))
+
+(define(current-year)
+  (car (today-ymd)))
 (define (replay-post req)
   ;(displayln req)
   (define xp (post-data->xexpr (request-post-data/raw req)))
@@ -112,6 +135,7 @@
       [("text");(displayln (receivemsg:text:get-Content xp)) (flush-output)
        (define txt (receivemsg:text:get-Content xp))
        (match txt
+         
          [(regexp #rx"put:(.*)" (list _ a)) (cond
                                               [(good-tablestr? a)
                                                ;(displayln (current-to-user))
@@ -127,6 +151,10 @@
                                                                         (query-exec cnn "insert or replace into users(name,enable) values($1,$2)" (current-to-user) 1)))
                                                 (return (response/msg (msg:text "课表已上传/更新" )))))]
                                               [else (response/msg (msg:text "课表格式有误!" ))])]
+         [(regexp date-expr (list _ _ _ _ _ a b)) (define dt (list(current-year) (string->number a)(string->number b)))
+                                                  (handle-dt dt)
+                                                  ]
+         [(regexp date-expr-long (list _ _ _ _ _ _ _ a b c)) (define dt (list (string->number a)(string->number b) (string->number c)))(handle-dt dt)]
          [else
                 (rp-cmd (match-cmd  txt)) ])]
       [("voice");(displayln (removejh(receivemsg:voice:get-Recognition xp)))(flush-output)
